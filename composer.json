@@ -1,0 +1,40 @@
+{
+    "name": "ardeveloppement/hal-rest-client",
+    "description": "This is an HTTP client based on guzzle to consume HAL REST API",
+    "keywords": ["API", "REST", "HAL", "HTTP", "client"],
+    "homepage": "https://github.com/ArDeveloppement/HALRestClient",
+    "type": "library",
+    "authors": [
+        {
+            "name": "ArDeveloppement",
+            "email": "contact@ardeveloppement.fr"
+        }
+    ],
+
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://satis.ardeveloppement.fr"
+        }
+    ],
+
+    "autoload": {
+        "psr-4": { "ArDev\\HALRestClient\\": "src/" }
+    },
+
+    "require": {
+        "php": ">=5.4",
+        "rize/uri-template": "~0.3",
+        "ardeveloppement/hal-navigator": "dev-master"
+    },
+
+    "require-dev": {
+        "phpunit/phpunit": "~4.4",
+        "guzzle/guzzle": "~3.8",
+        "m6web/coke": "~2.0"
+    },
+
+    "config": {
+        "bin-dir": "bin"
+    }
+}
