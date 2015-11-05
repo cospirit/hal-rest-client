@@ -122,6 +122,29 @@ class Client
 
         return $query->json();
     }
+    
+    /**
+     * @param string $relation
+     * @param array  $parameters
+     * @throws ClientErrorResponseException
+     * @return Navigator|array|string|int|bool|float
+     */
+    public function getFile($relation, array $parameters = [])
+    {
+        $templatedUrl = $this->getRelation($relation);
+        $url = $this->renderUri($templatedUrl, $parameters);
+
+        try {
+            $request = $this->guzzleClient->get(
+                $url
+            );
+            $query = $this->guzzleClient->send($request);
+        } catch (ClientErrorResponseException $e) {
+            throw $e;
+        }
+
+        return (string)$query->getBody();
+    }
 
     /**
      * @param string $relation
