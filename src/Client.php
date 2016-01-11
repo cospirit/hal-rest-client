@@ -58,16 +58,20 @@ class Client
     }
 
     /**
-     * @param  string $relation
+     * @param string $relation
+     * @param bool $isPublic
      * @throws ClientErrorResponseException | InvalidArgumentException
+     *
      * @return string
      */
-    public function getRelation($relation)
+    public function getRelation($relation, $isPublic = false)
     {
         if (null === ($relations = $this->cachedRelations)) {
             try {
+                $url = $this->indexUrl.($isPublic ? 'public/' : '');
+
                 $request = $this->guzzleClient->get(
-                    $this->indexUrl
+                    $url
                 );
                 $result = $this->guzzleClient->send($request)->json();
                 $relations = $result['_links'];
@@ -98,13 +102,14 @@ class Client
 
     /**
      * @param string $relation
-     * @param array  $parameters
+     * @param array $parameters
+     * @param bool $isPublic
      * @throws ClientErrorResponseException
      * @return Navigator|array|string|int|bool|float
      */
-    public function query($relation, array $parameters = [])
+    public function query($relation, array $parameters = [], $isPublic = false)
     {
-        $templatedUrl = $this->getRelation($relation);
+        $templatedUrl = $this->getRelation($relation, $isPublic);
         $url = $this->renderUri($templatedUrl, $parameters);
 
         try {
