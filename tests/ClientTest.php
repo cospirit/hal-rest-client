@@ -1,11 +1,11 @@
 <?php
 
-namespace Test\ArDev\HAL;
+namespace Test\CoSpirit\HAL;
 
 use Guzzle\Tests\GuzzleTestCase;
 use Guzzle\Service\Client as GuzzleClient;
 use Guzzle\Http\Exception\ClientErrorResponseException;
-use ArDev\HALRestClient\Client;
+use CoSpirit\HALRestClient\Client;
 
 class ClientTest extends GuzzleTestCase
 {
@@ -42,7 +42,7 @@ class ClientTest extends GuzzleTestCase
         $mock->addResponse($this->getMockResponse('test.query.json-response'));
 
         $data = $client->query('test', ['id' => 12]);
-        $this->assertInstanceOf('ArDev\Hal\Navigator', $data);
+        $this->assertInstanceOf('CoSpirit\Hal\Navigator', $data);
         $this->assertEquals(1, $data->id);
 
         // tests the templated uri used in the request
@@ -78,7 +78,7 @@ class ClientTest extends GuzzleTestCase
             'name' => 'Rupert',
         ]);
 
-        $this->assertInstanceOf('ArDev\Hal\Navigator', $data);
+        $this->assertInstanceOf('CoSpirit\Hal\Navigator', $data);
 
         $requests = $this->getMockedRequests();
         $r = end($requests);
