@@ -5,7 +5,7 @@ namespace Test\CoSpirit\HAL;
 use Guzzle\Tests\GuzzleTestCase;
 use Guzzle\Service\Client as GuzzleClient;
 use Guzzle\Http\Exception\ClientErrorResponseException;
-use CoSpirit\HALRestClient\Client;
+use CoSpirit\HAL\RestClient;
 
 class ClientTest extends GuzzleTestCase
 {
@@ -17,7 +17,7 @@ class ClientTest extends GuzzleTestCase
     protected function createClient()
     {
         $gclient = new GuzzleClient();
-        return new Client($gclient, '/');
+        return new RestClient($gclient, '/');
     }
 
     public function testGetRelation()
