@@ -1,32 +1,32 @@
 {
-    "name": "ardeveloppement/hal-rest-client",
+    "name": "cospirit/hal-rest-client",
     "description": "This is an HTTP client based on guzzle to consume HAL REST API",
     "keywords": ["API", "REST", "HAL", "HTTP", "client"],
-    "homepage": "https://github.com/ArDeveloppement/HALRestClient",
+    "homepage": "https://github.com/cospirit/hal-rest-client",
     "type": "library",
     "authors": [
         {
-            "name": "ArDeveloppement",
-            "email": "contact@ardeveloppement.fr"
+            "name": "CoSpirit",
+            "email": "dsi.poledev@cospirit.com"
         }
     ],
 
     "repositories": [
         {
-            "type": "composer",
-            "url": "http://satis.ardeveloppement.fr"
+            "type": "git",
+            "url": "https://github.com/cospirit/hal-navigator.git"
         }
     ],
 
     "autoload": {
-        "psr-4": { "ArDev\\HALRestClient\\": "src/" }
+        "psr-4": { "CoSpirit\\HALRestClient\\": "src/" }
     },
 
     "require": {
         "php": ">=5.4",
         "rize/uri-template": "~0.3",
         "guzzle/guzzle": "~3.8",
-        "ardeveloppement/hal-navigator": "dev-master"
+        "cospirit/hal-navigator": "dev-master"
     },
 
     "require-dev": {
