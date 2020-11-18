@@ -1,12 +1,12 @@
 <?php
 
-namespace ArDev\HALRestClient;
+namespace CoSpirit\HALRestClient;
 
 use Guzzle\Http\Exception\ClientErrorResponseException;
 use Guzzle\Service\Client as Guzzle;
 
 use Rize\UriTemplate;
-use ArDev\HAL\Navigator;
+use CoSpirit\HAL\Navigator;
 
 class Client
 {
