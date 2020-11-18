@@ -1,6 +1,6 @@
 <?php
 
-namespace CoSpirit\HALRestClient;
+namespace CoSpirit\HAL;
 
 use Guzzle\Http\Exception\ClientErrorResponseException;
 use Guzzle\Service\Client as Guzzle;
@@ -8,7 +8,7 @@ use Guzzle\Service\Client as Guzzle;
 use Rize\UriTemplate;
 use CoSpirit\HAL\Navigator;
 
-class Client
+class RestClient
 {
     /**
      * Guzzle client

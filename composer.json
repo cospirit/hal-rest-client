@@ -19,7 +19,7 @@
     ],
 
     "autoload": {
-        "psr-4": { "CoSpirit\\HALRestClient\\": "src/" }
+        "psr-4": { "CoSpirit\\HAL\\": "src/" }
     },
 
     "require": {
