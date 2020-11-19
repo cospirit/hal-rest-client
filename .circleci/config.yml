@@ -1,0 +1,117 @@
+version: 2.1
+
+orbs:
+  docker: circleci/docker@0.6
+  azure-acr: circleci/azure-acr@0.2.0
+  azure-aks: circleci/azure-aks@0.2.1
+  helm: circleci/helm@0.2.3
+  slack: circleci/slack@3.4.2
+
+executors:
+  system:
+    parameters:
+      php-modules-extra:
+        type: string
+        default: ""
+    docker:
+      - image: ardeveloppement/system:2
+        # This line is needed because the entrypoint is not executed when docker is deploying
+        command: ["supervisord", "--configuration", "/etc/supervisor/app.conf"]
+        environment:
+          PHP_DATE_TIMEZONE: Europe/Paris
+          SYSTEM_TIMEZONE: Europe/Paris
+          APP: symfony_2
+          PHP_VERSION: 7.4
+          PHP_MODULES_EXTRA: zip xdebug
+          # Remove depreciation notice for phpunit that ultimately crash the build
+          SYMFONY_DEPRECATIONS_HELPER: weak
+          ENVIRONMENT: development
+          SYMFONY_ENV: dev
+
+    working_directory: /srv/app
+
+jobs:
+  setup:
+    executor: system
+    steps:
+      - checkout
+      - run:
+          name: Versions
+          command: |
+            echo "******** PHP **********" && php -v
+            echo "******** COMPOSER *****" && composer -V
+      # Download and cache php dependencies
+      - restore_cache:
+          keys:
+            - v1-composer-packages-{{ checksum "composer.lock" }}
+      - run:
+          name: Install Composer dependencies
+          command: composer install -n --prefer-dist --optimize-autoloader --no-interaction
+      - save_cache:
+          key: v1-composer-packages-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+      # Persist workspace
+      - persist_to_workspace:
+          root: /srv/app
+          paths:
+            - vendor
+            - var/bootstrap.php.cache
+            - bin/php-cs-fixer
+            - bin/phpunit
+            - bin/coke
+
+  cs-fixer:
+    executor: system
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /srv/app
+      - run:
+          name: Run PHP CS Fixer
+          command: bin/php-cs-fixer fix -v --diff --dry-run
+
+  tests:
+    executor:
+      name: system
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-composer-packages-{{ checksum "composer.lock" }}
+      - attach_workspace:
+          at: /srv/app
+      - run:
+          name: Run tests
+          command: |
+            mkdir -p ~/test-results/junit
+            bin/phpunit --log-junit ~/test-results/junit/junit.xml --coverage-html ~/coverage-report
+            bin/coke
+
+  create-git-tag:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Tag GitHub version
+          command: |
+            git config --global user.email $GIT_USER_EMAIL
+            git config --global user.name $GIT_USER_NAME
+            git tag v$(cat VERSION)
+            git push --tag origin
+
+
+workflows:
+  version: 2.1
+
+  workflow:
+    jobs:
+      - setup
+      - cs-fixer: { requires: [setup] }
+      - tests: { requires: [setup] }
+      - create-git-tag:
+          context: cospirit-connect
+          requires: [ cs-fixer, tests ]
+          filters:
+            branches:
+              only: master
