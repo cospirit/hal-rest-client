@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    image: ardeveloppement/system:2
+    container_name: hal-rest-client_app
+    restart: always
+    labels:
+      - "traefik.enable=false"
+    environment:
+      PHP_DATE_TIMEZONE: Europe/Paris
+      SYSTEM_TIMEZONE: Europe/Paris
+      ENVIRONMENT: development
+      SYMFONY_ENV: dev
+      APP: symfony_2
+      PHP_VERSION: 7.4
+      PHP_MODULES_EXTRA: zip xdebug
+    env_file:
+      - system.env
+    volumes:
+      - ".:/srv/app"
