@@ -1,3 +1,11 @@
 bin/
 vendor/
 composer.lock
+
+# Check style git pre-commit hook
+!bin/pre-commit
+
+# PHP Cs Fixer
+.php_cs.cache
+
+system.env
