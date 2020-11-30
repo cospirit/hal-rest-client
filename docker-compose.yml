@@ -12,9 +12,9 @@ services:
       SYSTEM_TIMEZONE: Europe/Paris
       ENVIRONMENT: development
       SYMFONY_ENV: dev
-      APP: symfony_2
+      APP: html
       PHP_VERSION: 7.4
-      PHP_MODULES_EXTRA: zip xdebug
+      PHP_MODULES_EXTRA: xdebug
     env_file:
       - system.env
     volumes:
