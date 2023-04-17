@@ -59,7 +59,6 @@ jobs:
             - var/bootstrap.php.cache
             - bin/php-cs-fixer
             - bin/phpunit
-            - bin/coke
 
   cs-fixer:
     executor: system
@@ -86,7 +85,6 @@ jobs:
           command: |
             mkdir -p ~/test-results/junit
             bin/phpunit --log-junit ~/test-results/junit/junit.xml --coverage-html ~/coverage-report
-            bin/coke
 
   create-git-tag:
     machine: true

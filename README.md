@@ -42,8 +42,5 @@ Remove and clean docker containers :
 ## Tests
 
 ```bash
-    make test@coke
-```
-```bash
     make test@phpunit
 ```
