@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app:
-    image: ardeveloppement/system:2
+    image: ardeveloppement/system:2.2.2
     container_name: hal-rest-client_app
     restart: always
     labels:

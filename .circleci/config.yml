@@ -14,7 +14,7 @@ executors:
         type: string
         default: ""
     docker:
-      - image: ardeveloppement/system:2
+      - image: ardeveloppement/system:2.2.2
         # This line is needed because the entrypoint is not executed when docker is deploying
         command: ["supervisord", "--configuration", "/etc/supervisor/app.conf"]
         environment:
