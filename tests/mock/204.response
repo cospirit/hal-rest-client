@@ -1,7 +1,0 @@
-HTTP/1.1 204 No Content
-Allow: POST
-Cache-Control: no-cache
-Connection: keep-alive
-Content-Type: application/json
-Date: Mon, 20 Jul 2015 12:32:37 GMT
-Server: nginx/1.8.0
