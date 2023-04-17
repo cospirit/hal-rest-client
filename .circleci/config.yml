@@ -21,7 +21,7 @@ executors:
           PHP_DATE_TIMEZONE: Europe/Paris
           SYSTEM_TIMEZONE: Europe/Paris
           APP: symfony_2
-          PHP_VERSION: 7.4
+          PHP_VERSION: 8.1
           PHP_MODULES_EXTRA: zip xdebug
           # Remove depreciation notice for phpunit that ultimately crash the build
           SYMFONY_DEPRECATIONS_HELPER: weak
