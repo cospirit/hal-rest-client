@@ -6,7 +6,7 @@ composer.lock
 !bin/pre-commit
 
 # PHP Cs Fixer
-.php_cs.cache
+.php-cs-fixer.cache
 
 system.env
 

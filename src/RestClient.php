@@ -3,10 +3,8 @@
 namespace CoSpirit\HAL;
 
 use GuzzleHttp\Client as Guzzle;
-
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Utils;
-use JsonException;
 use Psr\Http\Message\ResponseInterface;
 use Rize\UriTemplate;
 
@@ -26,7 +24,7 @@ class RestClient
     /**
      * @throws GuzzleException
      * @throws \InvalidArgumentException
-     * @throws JsonException
+     * @throws \JsonException
      *
      * @return string
      */
@@ -47,7 +45,7 @@ class RestClient
     }
 
     /**
-     * Render a templated uri with the given parameters
+     * Render a templated uri with the given parameters.
      *
      * @param array<string, mixed> $parameters
      *
@@ -60,8 +58,10 @@ class RestClient
 
     /**
      * @param array<string, mixed> $parameters
+     *
      * @throws GuzzleException
-     * @throws JsonException
+     * @throws \JsonException
+     *
      * @return Navigator|array|string|int|bool|float
      */
     public function query(string $relation, array $parameters = [], bool $isPublic = false)
@@ -82,6 +82,7 @@ class RestClient
 
     /**
      * @param array<string, mixed> $parameters
+     *
      * @throws GuzzleException
      */
     public function getFile(string $relation, array $parameters = []): string
@@ -95,9 +96,11 @@ class RestClient
     }
 
     /**
-     * @param array<string, mixed> $parameters
+     * @param array<string, mixed>  $parameters
      * @param array<string, string> $files
+     *
      * @throws GuzzleException
+     *
      * @return Navigator|mixed
      */
     public function command(string $relation, array $parameters = [], array $files = [])
@@ -151,16 +154,15 @@ class RestClient
     private function getContentType(ResponseInterface $response): ?string
     {
         $contentType = $response->getHeader('Content-Type');
+
         return reset($contentType);
     }
 
     /**
-     * @param ResponseInterface $response
-     * @return mixed
      * @throws \JsonException
      */
     private function jsonDecode(ResponseInterface $response): mixed
     {
-        return json_decode($response->getBody()->getContents(),true);
+        return json_decode($response->getBody()->getContents(), true);
     }
 }
