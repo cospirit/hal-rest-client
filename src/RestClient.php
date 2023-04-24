@@ -136,19 +136,11 @@ class RestClient
 
         $command = $this->guzzleClient->post($url, $options);
 
-        switch ($this->getContentType($command)) {
-            case 'application/hal+json':
-                $response = new Navigator($this->jsonDecode($command));
-                break;
-            case 'application/json':
-                $response = $this->jsonDecode($command);
-                break;
-            default:
-                $response = $command->getBody()->getContents();
-                break;
-        }
-
-        return $response;
+        return match ($this->getContentType($command)) {
+            'application/hal+json' => new Navigator($this->jsonDecode($command)),
+            'application/json' => $this->jsonDecode($command),
+            default => $command->getBody()->getContents(),
+        };
     }
 
     private function getContentType(ResponseInterface $response): ?string
