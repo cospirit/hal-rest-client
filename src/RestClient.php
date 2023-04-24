@@ -10,6 +10,9 @@ use Rize\UriTemplate;
 
 class RestClient
 {
+    /**
+     * @var array<string, array<string, mixed>>|null
+     */
     protected ?array $cachedRelations = null;
 
     protected ?UriTemplate $uriTemplater;
@@ -62,7 +65,7 @@ class RestClient
      * @throws GuzzleException
      * @throws \JsonException
      *
-     * @return Navigator|array|string|int|bool|float
+     * @return Navigator|mixed[]|string|int|bool|float
      */
     public function query(string $relation, array $parameters = [], bool $isPublic = false)
     {
@@ -146,8 +149,9 @@ class RestClient
     private function getContentType(ResponseInterface $response): ?string
     {
         $contentType = $response->getHeader('Content-Type');
+        $contentType = reset($contentType);
 
-        return reset($contentType);
+        return $contentType === false ? null : $contentType;
     }
 
     /**
