@@ -96,8 +96,5 @@ development@application.install: development@composer.install
 ###         Tests           ###
 ###############################
 
-test@coke:
-	docker-compose run --rm app bin/coke
-
 test@phpunit:
 	docker-compose run --rm app bin/phpunit --stop-on-failure --stop-on-error
